@@ -1,3 +1,10 @@
+html, body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(to right, #f5ebf0, #ebe2f0);
+  }
+
 .logo {
     width: 60px;
 }
