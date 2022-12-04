@@ -1,83 +1,71 @@
-function consultaCep(){
-    var $cep = document.getElementById("cep").value.replace(/\D/g,'');
-    var url = "https://viacep.com.br/ws/" + $cep + '/json/';
-    var request = new XMLHttpRequest();
+let id = 0 
 
-    request.open('GET', url);
-    request.onerror = function (e){
-        document.getElementById('return').innerHTML = "API OFFLINE OU CEP INVÁLIDO"
-    }
+        let listaCEP = [
+            { id: id++, cep:'13330-090', logradouro:'Rua Pedro de Toledo', bairro: 'Centro', cidade: 'Indaiatuba', uf: 'SP'},
+            { id: id++, cep:'04961-990', logradouro:' Rua Hum', bairro: 'Capela do Socorro', cidade: 'São Paulo', uf: 'SP'},
+        ];
 
-    request.onload = ()=> {
-        var response = JSON.parse(request.responseText);
-        if(response.erro === true){
-            document.getElementById('return').innerHTML = 'CEP NÃO ENCONTRADO';
-        } else{
-            document.getElementById('return').innerHTML = 'CEP: ' + response.cep + '<br>' +
-                                                        'Lougradouro: ' + response.lougadouro + '<br>' +                                              'Bairro: ' + response.bairro + '<br>' +
-                                                        'Localidade: ' + response.localidade + '/' + response.uf;
-        }      
-             
-    }
+        const somaId = listaCEP.reduce((acumulador, item) => {
+            return acumulador + item.id;
+        }, 0);
 
-request.send();
-}
+        function addCEP(cep) {
+            listaCEP.push(cep);
+            renderizarCEP();
+        }
 
-let listaCep = [
-    { id: 1, tarefa: '',feita: false },
-    { id: 2, tarefa: '', feita: false },
-    { id: 3, tarefa: '', feita: false }
-];
+        function removerTarefa(id) {
+            listaCEP = listaCEP.filter(cep => cep.id !== id);
+            renderizarCEP();
+        }
 
-const somaId = listaCep.reduce((acumulador, item) => {
-    return acumulador + item.id;
-}, 0);
+        function renderizarCEP() {
+            let listaUl = document.getElementById('listaUl');
+            listaUl.innerHTML = '';
+            listaCEP.map(cep => {
+                let li = document.createElement('li');
+                li.classList.add('my-3');
+                li.innerHTML = cep.cep + " - "+ cep.logradouro + " - " + cep.bairro + " - " + cep.cidade + " / " + cep.uf;
+                li.innerHTML += ` <button type="button" 
+                                class="btn btn-sm btn-danger" 
+                                onclick="removerTarefa(${cep.id})">
+                                Remover
+                                </button>`;
+                listaUl.appendChild(li);
+            });
+        }
 
-function addCep(cep) {
-    listaCep.push(cep);
-    renderizarCep();
-}
+        renderizarCEP();
 
-function removerCep(id) {
-    listaCep = listaCep.filter(cep => cep.id !== id);
-    renderizarCep();
-}
+        const btnAdicionar = document.getElementById('btnAdicionar');
+        btnAdicionar.addEventListener('click', function () {
+            const buscar = document.getElementById('cep').value
+            if(buscar.length < 8 || buscar.length > 8){
+                alert("Digite um CEP válido")
+            }
+            else{
+                fetch('https://viacep.com.br/ws/'+ buscar + '/json/')
+                .then(response => response.json())
+                .then(data=> {
+                if(data.erro == true){
+                    alert('CEP não encontrado')
+                }
+                else{
+                addCEP(
+                {
+                    id: id++,
+                    cep: data.cep,
+                    logradouro: data.logradouro,
+                    bairro: data.bairro,
+                    cidade: data.localidade,
+                    uf: data.uf
+                });
 
+                }
+               
+             })
 
+            }
+            
 
-renderizarTarefas();
-
-const btnAdicionar = document.getElementById('btnAdicionar');
-btnAdicionar.addEventListener('click', function () {
-    const cep = document.getElementById('cep').value;
-    if(cep ==""){
-        alert("Por favor digite o cep que será adicionado!!")
-    }
-    else{
-        addTarefa(
-        {
-            id: listaCep.length + 1,
-            cep: cep,
-            feita: false
         });
-    }
-    
-});
-
-function renderizarCep() {
-    let listaUl = document.getElementById('listaUl');
-    listaUl.innerHTML = '';
-    listaTarefas.map(tarefa => {
-        let li = document.createElement('li');
-        li.classList.add('my-3');
-        li.innerHTML = tarefa.cep + "";
-        li.innerHTML += ` <button type="button" 
-                        class="btn btn-sm btn-danger" 
-                        onclick="removerCep(${cep.id})">
-                        Remover
-                        </button>`;
-        listaUl.appendChild(li);
-    });
-}
-
-renderizarCep();
