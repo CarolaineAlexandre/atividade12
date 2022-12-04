@@ -43,7 +43,7 @@ let id = 0
         btnAdicionar.addEventListener('click', function () {
             const buscar = document.getElementById('cep').value
             if(buscar.length < 8 || buscar.length > 8){
-                alert("Digite um CEP válido")
+                alert("Digite um CEP válido (somente números)")
             }
             else{
                 fetch('https://viacep.com.br/ws/'+ buscar + '/json/')
