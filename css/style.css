@@ -1,0 +1,20 @@
+.logo {
+    width: 60px;
+}
+
+.cabecalho {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: arial;
+    margin-top: 4%;
+    margin-left: 5%;
+    margin-bottom: 2%;
+}
+
+.principal {
+    color: rgb(117, 38, 208);
+    width: 50%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+    margin-right: 40%;
+}

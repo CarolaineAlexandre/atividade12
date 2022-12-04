@@ -5,6 +5,8 @@ let id = 0
             { id: id++, cep:'04961-990', logradouro:' Rua Hum', bairro: 'Capela do Socorro', cidade: 'São Paulo', uf: 'SP'},
         ];
 
+        document.getElementById("cep").style.color = "blue";
+
         const somaId = listaCEP.reduce((acumulador, item) => {
             return acumulador + item.id;
         }, 0);
@@ -60,7 +62,6 @@ let id = 0
                     cidade: data.localidade,
                     uf: data.uf
                 });
-
                 }
                
              })
