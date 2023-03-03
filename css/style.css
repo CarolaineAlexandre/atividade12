@@ -2,7 +2,7 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: linear-gradient(to right, #f5ebf0, #ebe2f0);
+    background: linear-gradient(to right, #e8348b, #330f43);
   }
 
 .logo {
@@ -20,8 +20,12 @@ html, body {
 }
 
 .principal {
-    color: rgb(117, 38, 208);
+    color: rgb(255, 255, 255);
     width: 50%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
     margin-right: 40%;
+}
+
+li{
+    color: rgb(255, 255, 255);
 }
