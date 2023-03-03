@@ -5,10 +5,6 @@ html, body {
     background: linear-gradient(to right, #e8348b, #330f43);
   }
 
-.logo {
-    width: 60px;
-}
-
 .cabecalho {
     display: flex;
     justify-content: space-around;
